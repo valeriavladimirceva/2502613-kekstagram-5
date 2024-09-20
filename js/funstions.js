@@ -19,3 +19,14 @@ function checkPolydrome (text){
   }
 }
 checkPolydrome('Лёша на полке клопа нашёл ');
+function returnNumbers (text) {
+  let numbers = '';
+  for(let i = 0; i <= text.length; i++){
+    if (!isNaN(text[i])) {
+      numbers += text[i];
+    }
+  }
+  return parseInt(numbers, 10);
+}
+returnNumbers('2023 год');
+returnNumbers('а я томат');
