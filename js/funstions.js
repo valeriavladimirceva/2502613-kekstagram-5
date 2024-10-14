@@ -1,3 +1,20 @@
+const isIncludWorkDay = function(startTimeWork, endTimeWork,startTimeMeet, durationMeet) {
+  const TimeMinutes = function(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  };
+  startTimeWork = TimeMinutes(startTimeWork);
+  endTimeWork = TimeMinutes(endTimeWork);
+  startTimeMeet = TimeMinutes(startTimeMeet);
+  const endTimeMeet = durationMeet + startTimeMeet;
+
+  return startTimeMeet >= startTimeWork && endTimeMeet <= endTimeWork;
+};
+// console.log(isIncludWorkDay('08:00', '17:30', '14:00', 90)); //true
+// console.log(isIncludWorkDay('8:0', '10:0', '8:0', 120)); //true
+// console.log(isIncludWorkDay('08:00', '14:30', '14:00', 90)); //false
+// console.log(isIncludWorkDay('14:00', '17:30', '08:0', 90)); //false
+
 function checkLenght (str, maxLenght) {
   if (str.length <= maxLenght) {
     return true;
@@ -30,3 +47,4 @@ function returnNumbers (text) {
 }
 returnNumbers('2023 год');
 returnNumbers('а я томат');
+
