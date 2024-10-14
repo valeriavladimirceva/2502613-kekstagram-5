@@ -10,6 +10,7 @@ const isIncludWorkDay = function(startTimeWork, endTimeWork,startTimeMeet, durat
 
   return startTimeMeet >= startTimeWork && endTimeMeet <= endTimeWork;
 };
+isIncludWorkDay();
 // console.log(isIncludWorkDay('08:00', '17:30', '14:00', 90)); //true
 // console.log(isIncludWorkDay('8:0', '10:0', '8:0', 120)); //true
 // console.log(isIncludWorkDay('08:00', '14:30', '14:00', 90)); //false
