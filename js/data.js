@@ -44,4 +44,4 @@ const createPhoto = (photosIndex) => ({
 });
 
 const getPhotos = () => Array.from({length: COUNT_PHOTOS}, (_,photosIndex) => createPhoto(photosIndex + 1));
-export {getPhotos};
+export { getPhotos };
