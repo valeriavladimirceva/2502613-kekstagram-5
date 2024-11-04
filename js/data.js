@@ -28,7 +28,7 @@ const createComments = function() {
     comments.push({
       id:generateIdComment(),
       avatar: `img/avatar-${getRandomInteger(1, COUNT_AVATARS)}.svg`,
-      message: createMessage,
+      message: createMessage(),
       name: getRandomArrayElement(NAMES_COMMENTS)
     });
   }
