@@ -76,15 +76,12 @@ const showBigPictureModal = (picture) => {
   showComments();
 };
 
-const onCancelButtonClick = () => {
-  hideBigPictureModal();
-};
+const onCancelButtonClick = () => hideBigPictureModal();
 
-const onCommentsLoaderClick = () => {
-  showComments();
-};
+const onCommentsLoaderClick = () => showComments();
 
 bigPictureCancel.addEventListener('click', onCancelButtonClick);
+
 commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
 export { showBigPictureModal };
