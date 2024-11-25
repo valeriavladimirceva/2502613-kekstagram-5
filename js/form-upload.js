@@ -1,3 +1,6 @@
+import { init as initScale, reset as resetScale } from './scale.js';
+import { init as initSlider, reset as resetSlider } from './effects.js';
+
 const MAX_HASHTAGS_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -19,6 +22,8 @@ const pristine = new Pristine (imgUploadForm, {
 });
 
 const showForm = () => {
+  initScale();
+  initSlider();
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeyDown);
@@ -27,6 +32,8 @@ const showForm = () => {
 const hideForm = () => {
   imgUploadForm.reset();
   pristine.reset();
+  resetScale();
+  resetSlider();
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
