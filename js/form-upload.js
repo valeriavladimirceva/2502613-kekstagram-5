@@ -1,5 +1,7 @@
 import { init as initScale, reset as resetScale } from './scale.js';
 import { init as initSlider, reset as resetSlider } from './effects.js';
+import { sendData } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -8,12 +10,17 @@ const ErrorText = {
   NOT_UNIQUE: 'Хэш-тэги должны быть уникальными',
   INVALID_PATTERN: 'Хэш-тег должен начинаться с # и содержать только буквы и цифры.'
 };
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...'
+};
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
+const imgUploadSubmit = document.querySelector('.img-upload__submit');
 const body = document.body;
 
 const pristine = new Pristine (imgUploadForm, {
@@ -82,8 +89,40 @@ const getHashtagErrorMessage = (value) => {
   return true;
 };
 
+const blockSubmitButton = () => {
+  imgUploadSubmit.disabled = true;
+  imgUploadSubmit.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  imgUploadSubmit.disabled = false;
+  imgUploadSubmit.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          showSuccessMessage();
+          onSuccess();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
 pristine.addValidator(textHashtags, validateHashtags, getHashtagErrorMessage);
 
 imgUploadForm.addEventListener('change', onFileInputChange);
 
 imgUploadCancel.addEventListener('click', onCancelButtonClick);
+
+export { setUserFormSubmit, hideForm };
