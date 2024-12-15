@@ -10,6 +10,7 @@ const ErrorText = {
   NOT_UNIQUE: 'Хэш-тэги должны быть уникальными',
   INVALID_PATTERN: 'Хэш-тег должен начинаться с # и содержать только буквы и цифры.'
 };
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Отправляю...'
@@ -21,6 +22,9 @@ const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
+const imgUploadInput = document.querySelector('.img-upload__input');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
 const body = document.body;
 
 const pristine = new Pristine (imgUploadForm, {
@@ -48,7 +52,21 @@ const hideForm = () => {
 
 const isTextFieldFocused = () => document.activeElement === textHashtags || document.activeElement === textDescription;
 
-const onFileInputChange = () => showForm();
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+const onFileInputChange = () => {
+  const file = imgUploadInput.files[0];
+  if (file && isValidType(file)) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${imgUploadPreview.src}')`;
+    });
+  }
+  showForm();
+};
 
 const onCancelButtonClick = () => hideForm();
 
