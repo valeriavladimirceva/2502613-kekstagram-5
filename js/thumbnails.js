@@ -4,6 +4,7 @@ const picturesContainer = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
 const drawingThumbnails = (pictures) => {
+  picturesContainer.querySelectorAll('.picture').forEach((element) => element.remove());
   pictures.forEach(({url, description, comments, likes}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;

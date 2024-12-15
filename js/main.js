@@ -7,8 +7,7 @@ import { initFilters } from './sort.js';
 getData()
   .then((photos) => {
     drawingThumbnails(photos);
-    initFilters(photos, (filteredPhotos) => {
-      document.querySelector('.pictures').innerHTML = '';
+    initFilters(photos,(filteredPhotos) => {
       drawingThumbnails(filteredPhotos);
     });
   })
