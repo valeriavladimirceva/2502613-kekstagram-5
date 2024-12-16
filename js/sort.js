@@ -11,6 +11,7 @@ const FILTERS = {
 const imgFilters = document.querySelector('.img-filters');
 const filterButtons = document.querySelectorAll('.img-filters__button');
 let currentFilter = FILTERS.FILTER_DEFAULT;
+let originalPhotos = [];
 
 const applyFilter = (photos) => {
   switch (currentFilter) {
@@ -23,7 +24,7 @@ const applyFilter = (photos) => {
         .sort((firstPhoto, secondPhoto) => secondPhoto.comments.length - firstPhoto.comments.length);
     case FILTERS.FILTER_DEFAULT:
     default:
-      return [...photos];
+      return [...originalPhotos];
   }
 };
 
@@ -38,13 +39,9 @@ const setActiveButton = (activeButton) => {
   activeButton.classList.add('img-filters__button--active');
 };
 
-const onFilterButtonClick = (evt, photos, updateThumbnails) => {
-  const targetButton = evt.target;
-  setActiveButton(targetButton);
-  setFilter(targetButton.id, photos, updateThumbnails);
-};
 
 const initFilters = (photos, updateThumbnails) => {
+  originalPhotos = [...photos];
   imgFilters.classList.remove('img-filters--inactive');
 
   const debouncedSetFilter = debounce((filterType) => {
@@ -52,9 +49,9 @@ const initFilters = (photos, updateThumbnails) => {
   }, FILTER_DELAY);
 
   filterButtons.forEach((button) => {
-    button.addEventListener('click', (evt) => {
-      debouncedSetFilter(evt.target.id);
-      onFilterButtonClick(evt, photos, updateThumbnails);
+    button.addEventListener('click', ({target}) => {
+      debouncedSetFilter(target.id);
+      setActiveButton(target);
     });
   });
 };
