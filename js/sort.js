@@ -2,27 +2,27 @@ import { debounce } from './utils.js';
 
 const FILTER_DELAY = 500;
 const RANDOM_PHOTOS_COUNT = 10;
-const FILTERS = {
-  FILTER_RANDOM: 'filter-random',
-  FILTER_DISCUSSED: 'filter-discussed',
-  FILTER_DEFAULT: 'filter-default'
+const Filters = {
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+  DEFAULT: 'filter-default'
 };
 
 const imgFilters = document.querySelector('.img-filters');
 const filterButtons = document.querySelectorAll('.img-filters__button');
-let currentFilter = FILTERS.FILTER_DEFAULT;
+let currentFilter = Filters.DEFAULT;
 let originalPhotos = [];
 
 const applyFilter = (photos) => {
   switch (currentFilter) {
-    case FILTERS.FILTER_RANDOM:
+    case Filters.RANDOM:
       return photos
         .sort(() => 0.5 - Math.random())
         .slice(0, RANDOM_PHOTOS_COUNT);
-    case FILTERS.FILTER_DISCUSSED:
+    case Filters.DISCUSSED:
       return photos
         .sort((firstPhoto, secondPhoto) => secondPhoto.comments.length - firstPhoto.comments.length);
-    case FILTERS.FILTER_DEFAULT:
+    case Filters.DEFAULT:
     default:
       return [...originalPhotos];
   }

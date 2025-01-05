@@ -1,14 +1,14 @@
 import { getData } from './api.js';
 import { showAlert } from './utils.js';
-import { drawingThumbnails } from './thumbnails.js';
+import { renderThumbnails } from './thumbnails.js';
 import { setUserFormSubmit, hideForm } from './form-upload.js';
 import { initFilters } from './sort.js';
 
 getData()
   .then((photos) => {
-    drawingThumbnails(photos);
+    renderThumbnails(photos);
     initFilters(photos,(filteredPhotos) => {
-      drawingThumbnails(filteredPhotos);
+      renderThumbnails(filteredPhotos);
     });
   })
   .catch((error) => {
