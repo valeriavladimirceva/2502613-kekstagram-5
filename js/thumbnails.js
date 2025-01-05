@@ -3,7 +3,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const picturesContainer = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
-const drawingThumbnails = (pictures) => {
+const renderThumbnails = (pictures) => {
   picturesContainer.querySelectorAll('.picture').forEach((element) => element.remove());
   pictures.forEach(({url, description, comments, likes}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -21,4 +21,4 @@ const drawingThumbnails = (pictures) => {
   picturesContainer.appendChild(fragment);
 };
 
-export { drawingThumbnails };
+export { renderThumbnails };
